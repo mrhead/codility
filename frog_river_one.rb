@@ -1,9 +1,11 @@
 def solution(x, a)
   seen = {}
+
   a.each_index do |i|
     seen[a[i]] = true
     return i if seen.size == x
   end
+
   -1
 end
 
