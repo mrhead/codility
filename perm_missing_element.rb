@@ -1,4 +1,4 @@
-def solution(a)
+def perm_missing_element(a)
   # value range [1..(N + 1)]
   # array size N
   n = a.size
@@ -15,14 +15,14 @@ require 'minitest/autorun'
 
 class Tests < MiniTest::Unit::TestCase
   def test_example_input
-    assert_equal 4, solution([2, 3, 1, 5])
+    assert_equal 4, perm_missing_element([2, 3, 1, 5])
   end
 
   def test_empty_array
-    assert_equal 1, solution([])
+    assert_equal 1, perm_missing_element([])
   end
 
   def test_one_item
-    assert_equal 2, solution([1])
+    assert_equal 2, perm_missing_element([1])
   end
 end
