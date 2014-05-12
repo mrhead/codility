@@ -22,6 +22,26 @@ def stone_wall(a)
   stones
 end
 
+# nicer ruby solution from http://blog.codility.com/2012/06/sigma-2012-codility-programming.html
+#
+# def stone_wall(a)
+#   stack = []
+#   stones = 0
+#
+#   a.each do |height|
+#     while stack.any? and stack.last > height
+#       stack.pop
+#     end
+#     if stack.any? and stack.last == height
+#       next
+#     end
+#     stones += 1
+#     stack << height
+#   end
+#
+#   stones
+# end
+
 require 'minitest/autorun'
 
 class Tests < MiniTest::Unit::TestCase
