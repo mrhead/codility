@@ -9,10 +9,8 @@ def min_abs_sum_of_two(a)
     min = min_abs_sum(a[back], a[front], min)
     if abs_sum(a[back+1], a[front]) < abs_sum(a[back], a[front-1])
       back += 1
-      next
     else
       front -= 1
-      next
     end
   end
   min = min_abs_sum(a[back], a[front], min)
