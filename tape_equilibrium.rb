@@ -1,20 +1,17 @@
-def tape_equilibrium(array)
-  p = 0
-  minimum = nil
-  total_sum = array.inject(:+)
-  sum_left = 0
-  sum_right = total_sum
+def tape_equilibrium(a)
+  n = a.size
+  left_sum = 0
+  right_sum = a.inject(:+)
+  min = 1 / 0.0
 
-  begin
-    sum_left += array[p]
-    sum_right -= array[p]
-    diff = (sum_left - sum_right).abs
-    if minimum.nil? || diff < minimum
-      minimum = diff
-    end
-    p += 1
-  end while p + 1 < array.size
-  minimum
+  a.each_index do |i|
+    break if i == n - 1
+    left_sum += a[i]
+    right_sum -= a[i]
+    abs = (left_sum - right_sum).abs
+    min = [min, abs].min
+  end
+  min
 end
 
 require 'minitest/autorun'
@@ -24,11 +21,15 @@ class Tests < MiniTest::Unit::TestCase
     assert_equal 1, tape_equilibrium([3, 1, 2, 4, 3])
   end
 
-  def test_max_range
-    assert_equal 2000, tape_equilibrium([-1000,1000])
+  def test_two_elements
+    assert_equal 0, tape_equilibrium([10, 10])
   end
 
-  def test_negative_values
-    assert_equal 2, tape_equilibrium([-5, -3, -8, -2])
+  def test_all_negative
+    assert_equal 0, tape_equilibrium([-10, -10])
+  end
+
+  def test_one_negative
+    assert_equal 20, tape_equilibrium([-10, 10])
   end
 end
