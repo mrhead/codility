@@ -1,14 +1,12 @@
 def perm_missing_element(a)
-  # value range [1..(N + 1)]
-  # array size N
   n = a.size
-  sorted_a = a.sort
+  counter = Array.new(n + 1, 0)
 
-  sorted_a.each_index do |i|
-    return i+1 if sorted_a[i] != i+1
+  a.each do |v|
+    counter[v - 1] += 1
   end
 
-  return n+1
+  counter.index { |v| v == 0 } + 1
 end
 
 require 'minitest/autorun'
@@ -22,7 +20,7 @@ class Tests < MiniTest::Unit::TestCase
     assert_equal 1, perm_missing_element([])
   end
 
-  def test_one_item
-    assert_equal 2, perm_missing_element([1])
+  def test_one_element
+    assert_equal 1, perm_missing_element([2])
   end
 end
