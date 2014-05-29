@@ -4,7 +4,6 @@ def min_max_division(k, m, a)
 
   while min <= max
     mid = (min + max) / 2
-    blocks = count_blocks(mid, a)
     if count_blocks(mid, a) <= k
       max = mid - 1
       result = mid
