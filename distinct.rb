@@ -1,6 +1,9 @@
 def distinct(a)
   seen = {}
-  a.each { |v| seen[v] = true }
+  a.each do |v|
+    seen[v] = true
+  end
+
   seen.size
 end
 
