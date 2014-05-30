@@ -1,22 +1,22 @@
 def min_avg_two_slice(a)
-  prefix_sums = Array.new(a.size + 1, 0)
-  a.each_with_index do |value, i|
-    prefix_sums[i+1] = value + prefix_sums[i]
+  min_avg = 1 / 0.0
+  min_index = 0
+
+  a.each_cons(2).each_with_index do |double, i|
+    avg = double.inject(:+) / 2.0
+
+    if avg < min_avg
+      min_index = i
+      min_avg = avg
+    end
   end
 
-  min_index = 0
-  min_average = nil
-  prefix_sums.each_with_index do |prefix_sum, index|
-    [2, 3].each do |slice_size|
-      next if index < slice_size
+  a.each_cons(3).each_with_index do |triple, i|
+    avg = triple.inject(:+) / 3.0
 
-      slice_average = (prefix_sum - prefix_sums[index-slice_size])/slice_size.to_f
-      min_average = slice_average if min_average.nil?
-
-      if slice_average < min_average
-        min_index = index - slice_size
-        min_average = slice_average
-      end
+    if avg < min_avg
+      min_index = i
+      min_avg = avg
     end
   end
 
@@ -30,15 +30,11 @@ class Tests < MiniTest::Unit::TestCase
     assert_equal 1, min_avg_two_slice([4, 2, 2, 5, 1, 5, 8])
   end
 
-  def test_first_index
-    assert_equal 0, min_avg_two_slice([1, 1])
-  end
-
-  def test_first_minimal_index
-    assert_equal 1, min_avg_two_slice([2, 1, 1, 1])
-  end
-
-  def test_slice_length_3
+  def test_slice_of_three
     assert_equal 1, min_avg_two_slice([2, 1, 2, 1])
+  end
+
+  def test_negative
+    assert_equal 4, min_avg_two_slice([1, 1, 0, 0, -5, -5, 1, 1])
   end
 end
