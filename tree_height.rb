@@ -1,24 +1,37 @@
 # https://codility.com/demo/take-sample-test/tree_height
 
 Tree = Struct.new(:x, :l, :r)
-State = Struct.new(:tree, :height)
 
 def tree_height(tree)
-  stack = []
-  max_height = 0
+  left_height = right_height = 0
 
-  # traversing the tree using depth first search
-  stack << State.new(tree, 0)
-  while stack.any?
-    state = stack.pop
-    current_tree = state.tree
-    max_height = [max_height, state.height].max
-    stack << State.new(current_tree.l, state.height + 1) if current_tree.l
-    stack << State.new(current_tree.r, state.height + 1) if current_tree.r
-  end
+  left_height = 1 + tree_height(tree.l) if tree.l
+  right_height = 1 + tree_height(tree.r) if tree.r
 
-  max_height
+  [left_height, right_height].max
 end
+
+# alternative solution (more complicated, but I would like to keep
+# it as a reference for depth first search)
+#
+# State = Struct.new(:tree, :height)
+#
+# def tree_height(tree)
+#   stack = []
+#   max_height = 0
+#
+#   # traversing the tree using depth first search
+#   stack << State.new(tree, 0)
+#   while stack.any?
+#     state = stack.pop
+#     current_tree = state.tree
+#     max_height = [max_height, state.height].max
+#     stack << State.new(current_tree.l, state.height + 1) if current_tree.l
+#     stack << State.new(current_tree.r, state.height + 1) if current_tree.r
+#   end
+#
+#   max_height
+# end
 
 require 'minitest/autorun'
 
