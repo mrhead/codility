@@ -1,25 +1,21 @@
-def stone_wall(a)
-  stack = [0]
-  stones = 0
-  prev_height = 0
+def stone_wall(h)
+  stack = []
+  blocks = 0
+  stack_height = 0
 
-  a.each do |height|
-    if height > prev_height
-      stack << height - prev_height
-      stones += 1
-    elsif height < prev_height
-      while height < prev_height do
-        prev_height -= stack.pop
-      end
-      if height > prev_height
-        stones += 1
-        stack << height - prev_height
-      end
+  h.each do |height|
+    next if height == stack_height
+    while stack_height > height
+      stack_height -= stack.pop
     end
-    prev_height = height
+    if stack_height < height
+      blocks += 1
+      stack << height - stack_height
+      stack_height += stack.last
+    end
   end
 
-  stones
+  blocks
 end
 
 # nicer ruby solution from http://blog.codility.com/2012/06/sigma-2012-codility-programming.html
@@ -45,12 +41,8 @@ end
 require 'minitest/autorun'
 
 class Tests < MiniTest::Unit::TestCase
-  def test_one_height
-    assert_equal 1, stone_wall([1])
-  end
-
   def test_one_block
-    assert_equal 1, stone_wall([1, 1])
+    assert_equal 1, stone_wall([2, 2])
   end
 
   def test_two_blocks
@@ -59,6 +51,10 @@ class Tests < MiniTest::Unit::TestCase
 
   def test_three_blocks
     assert_equal 3, stone_wall([2, 1, 2, 1])
+  end
+
+  def test_three_blocks_2
+    assert_equal 3, stone_wall([2, 3, 2, 1])
   end
 
   def test_example_input
