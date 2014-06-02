@@ -1,16 +1,15 @@
 def nesting(s)
-  opened = 0
+  stack = []
 
-  s.chars.each do |c|
-    if c == '('
-      opened += 1
+  s.chars.each do |char|
+    if char == '('
+      stack << char
     else
-      return 0 if opened == 0
-      opened -= 1
+      return 0 if stack.pop != '('
     end
   end
 
-  opened == 0 ? 1 : 0
+  stack.empty? ? 1 : 0
 end
 
 require 'minitest/autorun'
@@ -20,11 +19,19 @@ class Tests < MiniTest::Unit::TestCase
     assert_equal 1, nesting('(()(())())')
   end
 
-  def test_unopened
-    assert_equal 0, nesting('))')
+  def test_example_fail
+    assert_equal 0, nesting('())')
   end
 
-  def test_unclosed
-    assert_equal 0, nesting('((')
+  def test_empty
+    assert_equal 1, nesting('')
+  end
+
+  def test_success
+    assert_equal 1, nesting('()()')
+  end
+
+  def test_not_closed
+    assert_equal 0, nesting('(())(')
   end
 end
