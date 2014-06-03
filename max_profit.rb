@@ -1,15 +1,10 @@
 def max_profit(a)
-  min_price = a[0]
-  a = a.drop(1)
   max_profit = 0
+  min_price = 1 / 0.0
 
-  a.each do |price|
-    if price < min_price
-      min_price = price
-      next
-    end
-    profit = price - min_price
-    max_profit = profit if profit > max_profit
+  a.each do |v|
+    min_price = [min_price, v].min
+    max_profit = [max_profit, v - min_price].max
   end
 
   max_profit
@@ -23,6 +18,6 @@ class Tests < MiniTest::Unit::TestCase
   end
 
   def test_no_profit
-    assert_equal 0, max_profit([100, 1])
+    assert_equal 0, max_profit([10, 5, 1])
   end
 end
