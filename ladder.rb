@@ -1,19 +1,19 @@
 def ladder(a, b)
-  max = a.max
-  fibs = fibs(max).drop(1)
-  result = []
-  a.each_index do |i|
-    result << fibs[a[i]] % 2 ** b[i]
+  fibs = fibs(a.max)
+
+  a.zip(b).map do |rungs, p|
+    fibs[rungs + 1] & ((1 << p) - 1)
   end
-  result
 end
 
 def fibs(n)
   fibs = Array.new(n + 2, 0)
   fibs[1] = 1
-  for i in (2..n+1)
+
+  for i in 2..n+1
     fibs[i] = fibs[i - 1] + fibs[i - 2]
   end
+
   fibs
 end
 
